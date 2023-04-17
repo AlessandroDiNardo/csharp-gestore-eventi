@@ -9,23 +9,23 @@ namespace csharp_gestore_eventi
     internal class ProgrammaEventi
     {
         public string Title { get; set; }
-        public List<Event> Events { get; set; }
+        public List<Event> events { get; set; }
 
         public ProgrammaEventi(string titolo)
         {
             Title = titolo;
-            Events = new List<Event>();
+            events = new List<Event>();
         }
 
         public void AddEvent(Event e)
         {
-            Events.Add(e);
+            events.Add(e);
         }
 
         public List<Event> FilterData(DateTime data)
         {
             List<Event> eventiInData = new List<Event>();
-            foreach (Event e in Events)
+            foreach (Event e in events)
             {
                 if (e.Date == data)
                 {
@@ -35,7 +35,7 @@ namespace csharp_gestore_eventi
             return eventiInData;
         }
 
-        public static string ListEvent(List<Event> list)
+        public static string StampaEvent(List<Event> list)
         {
             string stringList = "";
             foreach (Event e in list)
@@ -47,22 +47,27 @@ namespace csharp_gestore_eventi
 
         public int NumEvent()
         {
-            return Events.Count;
+            return events.Count;
         }
 
         public void ClearLista()
         {
-            Events.Clear();
+            events.Clear();
         }
 
         public override string ToString()
         {
-            string stringList = $"Nome programma evento: {Title}\n";
-            foreach (Event e in Events)
+            string result = $"Il tuo programma: {Title}\n";
+            foreach (Event e in events)
             {
-                stringList += e.ToString();
+                result += $"\t{e}\n";
             }
-            return stringList;
+            return result;
+        }
+
+        public Event GetEvent(int index)
+        {
+            return events[index];
         }
 
     }

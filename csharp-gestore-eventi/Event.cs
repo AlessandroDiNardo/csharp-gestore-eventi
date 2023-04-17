@@ -56,12 +56,33 @@ namespace csharp_gestore_eventi
             get { return _capacity - _booked_seats; }
         }
 
+        // Metodo Getter per capienza massima
+        public int Capacity
+        {
+            get { return _capacity; }
+        }
+
         //dichiarazione costruttore, ha come parametri il titolo, la data, posti a disposizione
         public Event( string title, DateTime date, int capacity)
         {
-            Title = title;
-            Date = date;
+            if (string.IsNullOrEmpty(title))
+            {
+                throw new ArgumentException("Titolo errato, il titolo non può essere un campo VUOTO!");
+            }
+            _title = title;
+
+            if (date == DateTime.Now.Date)
+            {
+                throw new ArgumentException("Data errata, non può essere un dato passato");
+            }
+            _date = date;
+
+            if (capacity <= 0)
+            {
+                throw new ArgumentException("La capienza massima di posti deve essere un numero positivo.");
+            }
             _capacity = capacity;
+
             _booked_seats = 0; //inizializzo la variabile dei posti prenotati a 0
         }
 
@@ -100,7 +121,7 @@ namespace csharp_gestore_eventi
         //metodo che restituisce una stringa contenente: data formattata – titolo
         public override string ToString()
         {
-            return _date.ToString($"dd/MM/yyyy - {_title}");
+            return _date.ToString($"dd/MM/yyyy - {_title}: (Posti prenotati: {BookedSeats}, Posti disponibili: {NumFreeSeats})");
         }
     }
 }
