@@ -61,15 +61,6 @@ namespace csharp_gestore_eventi
         {
             Title = title;
             Date = date;
-            if (capacity <= 0) //Se la capienza massima è minore o uguale a zero appare messaggio di errore
-            {
-                throw new ArgumentException("Il valore della capienza massima deve essere un dato positivo");
-            }
-
-            if (Date < DateTime.Now.Date) //controlla se la data inserita sia quella di oggi e che non sia passata
-            {
-                Console.WriteLine($"Data inserita non corretta, hai inserito una data passata: {Date}");
-            }
             _capacity = capacity;
             _booked_seats = 0; //inizializzo la variabile dei posti prenotati a 0
         }
@@ -85,7 +76,10 @@ namespace csharp_gestore_eventi
             {
                 throw new ArgumentException($"Non ci sono tutti questi posti disponibili, posti disponibili: {NumFreeSeats}");
             }
-          
+            else if (Date < DateTime.Now)
+            {
+                throw new Exception("Impossibile prenotare posti per un evento passato");
+            }
             _booked_seats += num; //aumenta il numero di posti prenotati
         }
 
@@ -95,6 +89,10 @@ namespace csharp_gestore_eventi
             if( num > _booked_seats) //controlla se il numero inserito è maggiore dei posti disponibili appare messaggio di avviso
             {
                 throw new ArgumentException("Non ci sono abbastanza posti prenotati da disdire");
+            }
+            else if (Date < DateTime.Now)
+            {
+                throw new Exception("Impossibile prenotare posti per un evento passato");
             }
             _booked_seats -= num;
         }
