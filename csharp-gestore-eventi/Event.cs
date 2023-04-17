@@ -68,7 +68,7 @@ namespace csharp_gestore_eventi
 
             if (Date < DateTime.Now.Date) //controlla se la data inserita sia quella di oggi e che non sia passata
             {
-                throw new ArgumentException($"Data inserita non corretta, hai inserito una data passata: {Date}");
+                Console.WriteLine($"Data inserita non corretta, hai inserito una data passata: {Date}");
             }
             _capacity = capacity;
             _booked_seats = 0; //inizializzo la variabile dei posti prenotati a 0
@@ -95,10 +95,6 @@ namespace csharp_gestore_eventi
             if( num > _booked_seats) //controlla se il numero inserito è maggiore dei posti disponibili appare messaggio di avviso
             {
                 throw new ArgumentException("Non ci sono abbastanza posti prenotati da disdire");
-            }
-            else if (Date != DateTime.Now.Date) //controlla se la data inserita sia quella di oggi e che non sia passata
-            {
-                throw new ArgumentException($"Data inserita non corretta, hai inserito una data passata: {Date}");
             }
             _booked_seats -= num;
         }

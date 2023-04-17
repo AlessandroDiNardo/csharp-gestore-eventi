@@ -20,7 +20,6 @@
 
             Event newEvent = new Event(title, date, capacity);
             Console.WriteLine(newEvent.ToString());
-            Console.WriteLine("Il tuo evento è stato creato!");
 
             //chiediamo all'utente di inserire il numero di posti da prenotare
             Console.Write("Vuoi prenotare dei posti? (si/no) : ");
@@ -45,6 +44,42 @@
                 Console.WriteLine("Vuoi prenotare altri posti? (si/no)");
                 answer = Console.ReadLine();
             }
+
+            // Chiediamo all'utente se vuole disdire dei posti
+            Console.WriteLine("Vuoi disdire dei posti per l'evento? (si/no)");
+            answer = Console.ReadLine();
+
+            while (answer.ToLower() == "si")
+            {
+                Console.WriteLine("Inserisci il numero di posti da disdire:");
+                int numPosti = int.Parse(Console.ReadLine());
+
+                try
+                {
+                    newEvent.CancelSeats(numPosti);
+                    Console.WriteLine("Disdetta effettuata con successo");
+                    Console.WriteLine($"Posti prenotati: {newEvent.BookedSeats}, posti disponibili: {newEvent.NumFreeSeats}");
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    continue; // chiediamo nuovamente l'input
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Si è verificato un errore durante la disdetta dei posti: " + ex.Message);
+                    break; // usciamo dal ciclo while
+                }
+
+                Console.WriteLine("Vuoi disdire altri posti? (si/no)");
+                answer = Console.ReadLine();
+            }
+
+            Console.WriteLine("Riassunto evento:");
+            Console.WriteLine($"Titolo: {newEvent.Title}");
+            Console.WriteLine($"Data: {newEvent.Date.ToString("dd/MM/yyyy")}");
+            Console.WriteLine($"Posti prenotati: {newEvent.BookedSeats}");
+            Console.WriteLine($"Posti disponibili: {newEvent.NumFreeSeats}");
         }
     }
 }
