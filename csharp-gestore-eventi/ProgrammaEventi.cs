@@ -17,22 +17,30 @@ namespace csharp_gestore_eventi
             Events = new List<Event>();
         }
 
-        public void AddEvent(Event ev)
+        public void AddEvent(Event e)
         {
-            Events.Add(ev);
+            Events.Add(e);
         }
 
-        public List<Event> FilterData(DateTime date)
+        public List<Event> FilterData(DateTime data)
         {
-            return (List<Event>)Events.Where(x => x.Date == date);
+            List<Event> eventiInData = new List<Event>();
+            foreach (Event e in Events)
+            {
+                if (e.Date == data)
+                {
+                    eventiInData.Add(e);
+                }
+            }
+            return eventiInData;
         }
 
         public static string ListEvent(List<Event> list)
         {
             string stringList = "";
-            foreach (Event ev in list)
+            foreach (Event e in list)
             {
-                stringList += ev.ToString();
+                stringList += e.ToString();
             }
             return stringList;
         }
@@ -49,10 +57,10 @@ namespace csharp_gestore_eventi
 
         public override string ToString()
         {
-            string stringList = Title + "\n";
-            foreach (Event ev in Events)
+            string stringList = $"Nome programma evento: {Title}\n";
+            foreach (Event e in Events)
             {
-                stringList += ev.ToString();
+                stringList += e.ToString();
             }
             return stringList;
         }
